@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+<form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+</form>
+
+
+<table>
+    <tr>
+        <td>
+            <strong>Дата создания</strong>
+        </td>
+        <td>
+            <strong>Объявление</strong>
+        </td>
+        <td>
+            <strong>Текст</strong>
+        </td>
+        <td>
+            <strong>Откликается</strong>
+        </td>
+        <td>
+            <strong>Текст</strong>
+        </td>
+    </tr>
+  {% for response in responses %}
+    <tr>
+        <td>
+            {{response.post.date | date:'d.m.Y'}}
+        </td>
+        <td>
+            {{response.post.title}}
+        </td>
+        <td>
+            {{response.post.text}}
+        </td>
+        <td>
+            {{response.author}}
+        </td>
+        <td>
+            {{response.text}}
+        </td>
+        <td>
+            {% if response.status is False %}
+            <a href="{% url 'accept_response' response.id %}"><u> Принять</u></a> |
+            <a href="{% url 'delete_response' response.id %}"><u> Удалить</u></a>
+            {% else %}
+            Принят
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
